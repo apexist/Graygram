@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire //import 하기 전에 반드시 빌드 부터 해야 한다.
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //여기에 처음 시작 점을 만듬, 초기 스토리보드를 만듬
+        let window = UIWindow(frame: UIScreen.main.bounds) //위치는 0,0 사이즈는 아이폰 전체 크기로 나옴
+        window.backgroundColor = .white
+        window.makeKeyAndVisible()
+        
+        let viewController = FeedViewController()
+        window.rootViewController = viewController
+        
+        //URLSession
+        //Alamofire : Matt Thomson 이 만듬  
+        //1. 소스코드 직접 다운로드 : 하지말라
+        //2. CocoaPods를 사용한다 : 해라, 의존성 관리 매니저, 외부라이브러리들을 쉽게 추가 할 수 있음
+        //3. Carthage를 사용 : 비추
+        
+        self.window = window //위에서 옵셔널이니까 나중에 계쏙 쓸때 오셔널 바인딩 안하기 위해서 정의해서 넣어준다.
+        
         return true
     }
 
