@@ -61,6 +61,7 @@ final class FeedViewController: UIViewController {
                         guard let jsonArray = json["data"] as? [[String:Any]] else {return}
                         let newPosts = [Post](JSONArray : jsonArray)
                         self.posts = newPosts
+                        self.collectionView.reloadData()
                     
                     case .failure(let error):
                         print(error)
@@ -86,7 +87,16 @@ extension FeedViewController: UICollectionViewDataSource {
 }
     
 extension FeedViewController : UICollectionViewDelegateFlowLayout {
-        
+    func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+    return CGSize(
+    width: collectionView.frame.size.width,
+    height: collectionView.frame.size.width
+    )
+    }
 }
 
 
