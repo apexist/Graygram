@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire //import 하기 전에 반드시 빌드 부터 해야 한다.
+import SnapKit
 
 
 @UIApplicationMain
@@ -21,11 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //여기에 처음 시작 점을 만듬, 초기 스토리보드를 만듬
         let window = UIWindow(frame: UIScreen.main.bounds) //위치는 0,0 사이즈는 아이폰 전체 크기로 나옴
-        window.backgroundColor = .white
-        window.makeKeyAndVisible()
+        window.backgroundColor = .white //배경색  바꿈
+        window.makeKeyAndVisible() //키윈도우로 만들고 보이게 함
         
         let viewController = FeedViewController()
-        window.rootViewController = viewController
+        let navigationController = UINavigationController(rootViewController: viewController)
+        window.rootViewController = navigationController
         
         //URLSession
         //Alamofire : Matt Thomson 이 만듬  
@@ -34,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //3. Carthage를 사용 : 비추
         
         self.window = window //위에서 옵셔널이니까 나중에 계쏙 쓸때 오셔널 바인딩 안하기 위해서 정의해서 넣어준다.
-        
         return true
     }
 

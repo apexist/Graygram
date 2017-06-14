@@ -1,15 +1,24 @@
 PODS:
   - Alamofire (4.4.0)
+  - Kingfisher (3.9.1)
+  - ManualLayout (1.3.0)
   - ObjectMapper (2.2.7)
+  - SnapKit (3.2.0)
 
 DEPENDENCIES:
   - Alamofire
+  - Kingfisher
+  - ManualLayout
   - ObjectMapper
+  - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  Kingfisher: 6729a0baaa458245bfb8cd5a1296c71c10d6eb6c
+  ManualLayout: 68ac8cfa6b5f656f7a9fadec3730208b95986880
   ObjectMapper: 65abcfd9a61cf7396cbd14a4fb22fddfcc46577e
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: b53c75c027fac10d5e12c60715a9ed2c57426a4f
+PODFILE CHECKSUM: d88b9756e32ab3be6330da3fc6349a03063d6adf
 
 COCOAPODS: 1.2.1
