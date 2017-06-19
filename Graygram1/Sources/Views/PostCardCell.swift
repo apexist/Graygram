@@ -250,11 +250,10 @@ final class PostCardCell: UICollectionViewCell {
     }
     
     
-    /*에러있는듯....
+    //에러있는듯....
     func likeButtonDidTap() {
         guard let postID = self.post?.id else { return }
-        let urlString = "https://api.graygram.com/post/\(postID)/likes"
-        
+        let urlString = "https://api.graygram.com/posts/\(postID)/likes"
         Alamofire.request(urlString, method: .post)
           .validate(statusCode: 200..<400)
           .responseData { response in
@@ -266,9 +265,10 @@ final class PostCardCell: UICollectionViewCell {
                 print("좋아요실패\(postID)")
                 self.likeButton.isSelected = false
             }
-          }
-    }*/
+        }
+    }
     
+    /*
     func likeButtonDidTap() {
         guard let postID = self.post?.id else { return }
         let urlString = "https://api.graygram.com/posts/\(postID)/likes"
@@ -279,13 +279,12 @@ final class PostCardCell: UICollectionViewCell {
                 case .success:
                     print("좋아요 성공 \(postID)")
                     self.likeButton.isSelected = true
-                    
                 case .failure:
                     print("좋아요 실패 \(postID)")
                     self.likeButton.isSelected = false
-                }
+            }
         }
-    }
+    }*/
     
 }
 
