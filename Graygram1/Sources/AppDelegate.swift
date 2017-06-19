@@ -15,6 +15,11 @@ import SnapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    //
+    class var instance: AppDelegate? {
+      return UIApplication.shared.delegate as? AppDelegate
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -25,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.backgroundColor = .white //배경색  바꿈
         window.makeKeyAndVisible() //키윈도우로 만들고 보이게 함
         
-        let viewController = FeedViewController()
+        //let viewController = FeedViewController()
+        let viewController = SplashViewController() //임시코드
         let navigationController = UINavigationController(rootViewController: viewController)
         window.rootViewController = navigationController
         
@@ -38,29 +44,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window //위에서 옵셔널이니까 나중에 계쏙 쓸때 오셔널 바인딩 안하기 위해서 정의해서 넣어준다.
         return true
     }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    
+    //화면을 바꾸는 메소드, 로그인 성공 후 호출됨
+    func presentMainScreen() {
+        let viewController = FeedViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        self.window?.rootViewController = navigationController
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    //로그인 세션이 죽었을때 로그인 뷰로 보냄
+    func presentLoginScreen() {
+        let viewController = LoginViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        self.window?.rootViewController = navigationController
     }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
 
 }
 

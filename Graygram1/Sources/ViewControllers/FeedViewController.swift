@@ -56,7 +56,7 @@ final class FeedViewController: UIViewController {
         self.view.addSubview(collectionView)
         collectionView.addSubview(refreshControl)
         
-        //snapkit을 써서 오토레이아웃 정의하는 편의
+        //snapkit을 써서 오토레이아웃 정의하는 편의 //코드를 사용해서 정의, SnapKit을 사용해서 간단화 시킴 /돌려도 자동으로 가로크기에 맞게 함
         collectionView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.equalToSuperview()
@@ -100,6 +100,7 @@ final class FeedViewController: UIViewController {
             return
         }
         
+        //중복요청 막기 위해서
         isLoading = true
         
         Alamofire.request(urlString)

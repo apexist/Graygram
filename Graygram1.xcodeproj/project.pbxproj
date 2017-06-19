@@ -12,6 +12,9 @@
 		76388EC51EE8392D009647DB /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388EC41EE8392D009647DB /* String+Size.swift */; };
 		76388EC71EEEAFDF009647DB /* UIImageView+Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388EC61EEEAFDF009647DB /* UIImageView+Photo.swift */; };
 		76388EC91EEEC4F5009647DB /* CollectionActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388EC81EEEC4F5009647DB /* CollectionActivityIndicatorView.swift */; };
+		76388ECB1EF1519B009647DB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388ECA1EF1519B009647DB /* LoginViewController.swift */; };
+		76388ECD1EF165D6009647DB /* DataResponse+ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388ECC1EF165D5009647DB /* DataResponse+ErrorInfo.swift */; };
+		76388ECF1EF1707C009647DB /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388ECE1EF1707C009647DB /* SplashViewController.swift */; };
 		76AAD2401EDEEEFD0022829F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AAD23F1EDEEEFD0022829F /* Post.swift */; };
 		76AAD2421EDF01790022829F /* PostCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AAD2411EDF01790022829F /* PostCardCell.swift */; };
 		76F29B361EDEE4800077F571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76F29B2E1EDEE4800077F571 /* Assets.xcassets */; };
@@ -28,6 +31,9 @@
 		76388EC41EE8392D009647DB /* String+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
 		76388EC61EEEAFDF009647DB /* UIImageView+Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Photo.swift"; sourceTree = "<group>"; };
 		76388EC81EEEC4F5009647DB /* CollectionActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionActivityIndicatorView.swift; sourceTree = "<group>"; };
+		76388ECA1EF1519B009647DB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		76388ECC1EF165D5009647DB /* DataResponse+ErrorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataResponse+ErrorInfo.swift"; sourceTree = "<group>"; };
+		76388ECE1EF1707C009647DB /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		76AAD23F1EDEEEFD0022829F /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		76AAD2411EDF01790022829F /* PostCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCardCell.swift; sourceTree = "<group>"; };
 		76F29B2E1EDEE4800077F571 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 			children = (
 				76388EC41EE8392D009647DB /* String+Size.swift */,
 				76388EC61EEEAFDF009647DB /* UIImageView+Photo.swift */,
+				76388ECC1EF165D5009647DB /* DataResponse+ErrorInfo.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -155,6 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				76F29B3E1EDEE5F20077F571 /* FeedViewController.swift */,
+				76388ECA1EF1519B009647DB /* LoginViewController.swift */,
+				76388ECE1EF1707C009647DB /* SplashViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -281,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76388ECB1EF1519B009647DB /* LoginViewController.swift in Sources */,
 				76AAD2401EDEEEFD0022829F /* Post.swift in Sources */,
 				76388EC91EEEC4F5009647DB /* CollectionActivityIndicatorView.swift in Sources */,
 				76388EC51EE8392D009647DB /* String+Size.swift in Sources */,
@@ -289,6 +299,8 @@
 				76F29B3F1EDEE5F20077F571 /* FeedViewController.swift in Sources */,
 				76388EC21EE8250F009647DB /* User.swift in Sources */,
 				76F29B381EDEE4800077F571 /* AppDelegate.swift in Sources */,
+				76388ECD1EF165D6009647DB /* DataResponse+ErrorInfo.swift in Sources */,
+				76388ECF1EF1707C009647DB /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

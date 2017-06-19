@@ -9,6 +9,7 @@
 import UIKit
 import ManualLayout
 import Kingfisher
+import Alamofire
 
 
 //더이상 상속하기 싫음
@@ -56,6 +57,8 @@ final class PostCardCell: UICollectionViewCell {
     //사용자가 남긴 text
     fileprivate let messageLabel = UILabel()
     
+    fileprivate var post: Post?
+    
     //cell을상속받으면 꼭 아래 함
     
     //1. 생성자
@@ -100,6 +103,9 @@ final class PostCardCell: UICollectionViewCell {
         self.contentView.addSubview(likeButton)
         self.contentView.addSubview(likeCountLabel)
         self.contentView.addSubview(messageLabel)
+        
+        likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
+        
     }
     
     // 자동완성됨 실행안됨 ... 무시해도됨
@@ -115,10 +121,14 @@ final class PostCardCell: UICollectionViewCell {
         //post.user.photoID 는 옵셔널이다.이미지가 옵셔널일때 어떻게 하면 편할까
         //setImage에 photoID를 옵셔널로 정의 하고 guard let으로 처리
         
+        self.post = post
+        
         avatarView.setImage(photoID: post.user.photoID, size: .tiny)
         usernameLabel.text = post.user.username
         
         pictureView.setImage(photoID: post.photoID, size: .large)
+        
+        likeButton.isSelected = post.isLiked
         
         likeCountLabel.text = "\(post.likeCount ?? 0)명이 좋아합니다" //optional(0)명이 좋아합니다. 없애기 위해서 ?? 0 추가
         messageLabel.text = post.message
@@ -238,6 +248,44 @@ final class PostCardCell: UICollectionViewCell {
         // 한줄:  sizeToFit -> width 설정
         // 여러줄: width 설정 -> sizeToFit
     }
-
+    
+    
+    /*에러있는듯....
+    func likeButtonDidTap() {
+        guard let postID = self.post?.id else { return }
+        let urlString = "https://api.graygram.com/post/\(postID)/likes"
+        
+        Alamofire.request(urlString, method: .post)
+          .validate(statusCode: 200..<400)
+          .responseData { response in
+            switch response.result {
+            case .success:
+                print("좋아요성공\(postID)")
+                self.likeButton.isSelected = true
+            case .failure:
+                print("좋아요실패\(postID)")
+                self.likeButton.isSelected = false
+            }
+          }
+    }*/
+    
+    func likeButtonDidTap() {
+        guard let postID = self.post?.id else { return }
+        let urlString = "https://api.graygram.com/posts/\(postID)/likes"
+        Alamofire.request(urlString, method: .post)
+            .validate(statusCode: 200..<400)
+            .responseData { response in
+                switch response.result {
+                case .success:
+                    print("좋아요 성공 \(postID)")
+                    self.likeButton.isSelected = true
+                    
+                case .failure:
+                    print("좋아요 실패 \(postID)")
+                    self.likeButton.isSelected = false
+                }
+        }
+    }
+    
 }
 
