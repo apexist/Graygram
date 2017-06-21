@@ -47,9 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //화면을 바꾸는 메소드, 로그인 성공 후 호출됨
     func presentMainScreen() {
-        let viewController = FeedViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
-        self.window?.rootViewController = navigationController
+        //let viewController = FeedViewController()
+        //let navigationController = UINavigationController(rootViewController: viewController)
+        
+        //Tab Bar 추가 //여기 이상 함....
+        let tabBarController = MainTabBarController()
+        self.window?.rootViewController = tabBarController
     }
 
     //로그인 세션이 죽었을때 로그인 뷰로 보냄

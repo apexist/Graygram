@@ -30,6 +30,18 @@ final class FeedViewController: UIViewController {
         collectionViewLayout: UICollectionViewFlowLayout() // CSS float과 비슷
     )
     
+    init() {
+        super.init(nibName:nil, bundle: nil)
+        self.navigationItem.title = "Graygram" // (기본값 self.title)
+        self.tabBarItem.title = "Feed" // (기본값 self.title)
+        self.tabBarItem.image = UIImage(named: "tab-feed")
+        self.tabBarItem.selectedImage = UIImage(named: "tab-feed-selected")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,9 +80,16 @@ final class FeedViewController: UIViewController {
             //make.edges.equalToSuperview()
         }
         
+        //좋아요 노티피케이선 관찰
+        NotificationCenter.default.addObserver(self, selector: #selector(postDidLike), name: .postDidLike, object: nil)
+        
+        //좋아요 취소 노티피케이선 관찰
+        NotificationCenter.default.addObserver(self, selector: #selector(postDidUnLike), name: .postDidUnLike, object: nil)
+        
         fetchPosts()
         
     }
+    
 
     func refreshControlDidChangeValue() {
         fetchPosts()
@@ -134,7 +153,56 @@ final class FeedViewController: UIViewController {
                 }
         }
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    // MARK: Notification
+    func postDidLike(notification: Notification) {
+        guard let postID = notification.userInfo?["postID"] as? Int else { return }
+        //미션:
+        //self.posts 배열에서 좋아요가 표시된 Post 정보 업데이트
+        //likeCound += 1
+        //isLiked = true
+        
+        /*
+         self.posts = self.posts.map { post in
+         if post.id == postID {
+         var newPost = post
+         newPost.isLiked = true
+         newPost.likeCount! += 1
+         return newPost
+         } else {
+         return post
+         }
+         }
+         */
+        
+        //또는
+        guard let index = self.posts.index(where: { $0.id == postID }) else { return }
+        var newPost = self.posts[index]
+        newPost.isLiked = true
+        newPost.likeCount! += 1
+        self.posts[index] = newPost
+        
+        print(self.posts[0].isLiked, self.posts[0].likeCount)
+    }
+    
+    func postDidUnLike(notification: Notification) {
+        guard let postID = notification.userInfo?["postID"] as? Int else { return }
+        
+        guard let index = self.posts.index(where: { $0.id == postID }) else { return }
+        var newPost = self.posts[index]
+        newPost.isLiked = false
+        newPost.likeCount! -= 1
+        self.posts[index] = newPost
+    }
+
 }
+
+
 
 extension FeedViewController: UICollectionViewDataSource {
     
@@ -168,9 +236,9 @@ extension FeedViewController: UICollectionViewDataSource {
         }
     
 }
-    
+
     //갯수만큼의 셀을 만들어서 색깔만 칠했음 위에까지...
-    
+
 extension FeedViewController : UICollectionViewDelegateFlowLayout {
     
     // 사이즈 정의 , 특정한 indexpath에 해당하는 셀의 사이즈를 정의, 모두 post card cell에 위읨

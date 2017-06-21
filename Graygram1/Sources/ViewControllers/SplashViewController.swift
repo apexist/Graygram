@@ -29,6 +29,7 @@ final class SplashViewController: UIViewController {
     
         let urlString = "https://api.graygram.com/me"
         
+        //세션이 정상적이라면, 서버에서 정보가 내려오고 세션이 만료되면 에러가 내려옴
         Alamofire.request(urlString)
           .validate(statusCode: 200..<400)
           .responseJSON{ response in

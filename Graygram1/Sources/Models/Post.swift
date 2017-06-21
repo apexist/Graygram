@@ -30,3 +30,25 @@ struct Post: Mappable{
     }
     
 }
+
+extension Notification.Name {
+    
+    ///좋아요를 할 경우 발생하는 Notification, 'userInfo'에 'postID: Int' 가 전달됩니다.
+    //반드시 위와 같이 코멘트 한다.
+    static var postDidLike: Notification.Name {
+        //get 메소드만 작성시 아래와 같이 return바로 할 수 있음
+        //return Notification.Name("postDidLike") //아래 중복 제거
+        return .init("postDidLike")
+    }
+    
+    //혹은 아래도 가능
+    //static let postDidLike: Notification.Name = .init("postDidLike")
+    
+    
+    ///좋아요를 취소 할 경우 발생하는 Notification, 'userInfo'에 'postID: Int' 가 전달됩니다.
+    static var postDidUnLike: Notification.Name {
+        //return Notification.Name("postDidUnLike")
+        return .init("postDidUnLike")
+    }
+    
+}

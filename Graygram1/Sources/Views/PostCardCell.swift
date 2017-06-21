@@ -113,7 +113,8 @@ final class PostCardCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //2. 설정 , 데이터만 넣어줌
+    //2. 설정 , 데이터만 넣어줌 
+    // UI 바꾸는건 configure에서만 수행하도록 한다.
     
     func configure(post: Post) {
         //self.backgroundColor = .lightGray //나중에 제거할 것임....영역확인 위함
@@ -249,23 +250,77 @@ final class PostCardCell: UICollectionViewCell {
         // 여러줄: width 설정 -> sizeToFit
     }
     
-    
-    //에러있는듯....
     func likeButtonDidTap() {
-        guard let postID = self.post?.id else { return }
-        let urlString = "https://api.graygram.com/posts/\(postID)/likes"
-        Alamofire.request(urlString, method: .post)
-          .validate(statusCode: 200..<400)
-          .responseData { response in
-            switch response.result {
-            case .success:
-                print("좋아요성공\(postID)")
-                self.likeButton.isSelected = true
-            case .failure:
-                print("좋아요실패\(postID)")
-                self.likeButton.isSelected = false
-            }
+
+        //guard let postID = self.post?.id else { return }
+        guard let post = self.post else { return }
+
+        let urlString = "https://api.graygram.com/posts/\(post.id!)/likes"
+        
+        //UI를 그리는데 필요한 데이터를 바꾸고 자동갱신되도록
+    
+        //like버튼 분기 처리
+        if !likeButton.isSelected {
+            
+            //좋아요 버튼을 먼저 바꿔 놓고 요청
+            var newPost = post //newPost는 값은 같지만 다른 위치에 존재하는 변수가 됨
+            newPost.isLiked = true
+            newPost.likeCount! += 1
+            self.configure(post: newPost)
+            
+            //notification발송
+            NotificationCenter.default.post(name: .postDidLike, object: self, userInfo: ["postID": post.id!])
+            
+            Alamofire.request(urlString, method: .post)
+                .validate(statusCode: 200..<400)
+                .responseData { response in
+                    switch response.result {
+                    case .success:
+                        print("좋아요 성공\(post.id!)")
+                        //var newPost = post //newPost는 값은 같지만 다른 위치에 존재하는 변수가 됨
+                        //newPost.isLiked = true
+                        //newPost.likeCount! += 1
+                        //self.configure(post: newPost) //복제본을 가지고 configure다시 실행
+                        //self.likeButton.isSelected = true
+                    case .failure:
+                        //중복요청 conflict 처리
+                        if response.response?.statusCode != 409 {
+                            print("좋아요 실패\(post.id!)")
+                            //self.likeButton.isSelected =  false
+                            self.configure(post: post)
+                            //notification발송
+                            NotificationCenter.default.post(name: .postDidUnLike, object: self, userInfo: ["postID": post.id!])
+                        }
+                    }
+                }
+        } else {
+            //취소를 먼저 UI 처리 하고 요청
+            var newPost = post //newPost는 값은 같지만 다른 위치에 존재하는 변수가 됨
+            newPost.isLiked = false
+            newPost.likeCount! -= 1
+            self.configure(post: newPost) //복제본을 가지고 configure다시 실행
+            //notification발송
+            NotificationCenter.default.post(name: .postDidUnLike, object: self, userInfo: ["postID": post.id!])
+            
+            Alamofire.request(urlString, method: .delete)
+                .validate(statusCode: 200..<400)
+                .responseData { response in
+                    switch response.result {
+                    case .success:
+                        print("좋아요 취소 성공\(post.id!)")
+                        //self.likeButton.isSelected = false
+                    case .failure:
+                         if response.response?.statusCode != 409 {
+                            print("좋아요 취소 실패\(post.id!)")
+                            //self.likeButton.isSelected = true
+                            self.configure(post: post)
+                            //notification발송
+                            NotificationCenter.default.post(name: .postDidLike, object: self, userInfo: ["postID": post.id!])
+                         }
+                    }
+                }
         }
     }
 }
+
 
