@@ -180,7 +180,7 @@ final class FeedViewController: UIViewController {
          }
          */
         
-        //또는
+        //또는 
         guard let index = self.posts.index(where: { $0.id == postID }) else { return }
         var newPost = self.posts[index]
         newPost.isLiked = true

@@ -47,6 +47,21 @@ final class MainTabBarController: UITabBarController {
         //그냥 하면 크래시 남, 사진에 접근 할수 있도로 plist 설정 / Target의 info에 추가 "Privacy - Photo Library Usage Description"
     }
     
+    //크롭뷰를 올림
+    fileprivate func presentCropViewController(image: UIImage) {
+        let cropViewController = CropViewController(image: image)
+        //navigationcontroller로 한번 감쌈
+        
+        cropViewController.didFinishCropping = { image in
+            print(image)
+            let grayscaledImage = image.grayscaled()
+            print(grayscaledImage)
+        }
+        
+        let navigationController = UINavigationController(rootViewController: cropViewController)
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
 }
 
 // will~ // did~
@@ -71,7 +86,13 @@ extension MainTabBarController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("이미지 선택: \(info)")
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        
+
+        picker.dismiss(animated: true, completion: nil)
+        
         print(image) //breakpoit 넣고 미리 볼수 있다 quick look할수 있다.
+        
+        self.presentCropViewController(image: image)
     }
 }
 

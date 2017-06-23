@@ -268,7 +268,11 @@ final class PostCardCell: UICollectionViewCell {
             newPost.likeCount! += 1
             self.configure(post: newPost)
             
-            //notification발송
+            //notification발송 
+            //스크롤내렸다 올라왔더니, 좋아요 이전의 데이터로 되어 있음 postcardcell이 가지고 있던  데이터는 없데이트 되었으나 feedviewcontroller가 가지고 
+            //있던 데이터는 바뀌지 않음, 따라서 feedviewcontroller가 알수 있도록 notification해줌
+            //global하게 메시지 전달
+            //Notification의 싱글톤 인스턴스를 생성하고 보냄 , Post.swift에 .postDidLike정의
             NotificationCenter.default.post(name: .postDidLike, object: self, userInfo: ["postID": post.id!])
             
             Alamofire.request(urlString, method: .post)
@@ -277,6 +281,7 @@ final class PostCardCell: UICollectionViewCell {
                     switch response.result {
                     case .success:
                         print("좋아요 성공\(post.id!)")
+                        //빠른 피드백을 위해 요청이 성공했다 치고 UI부터 바꾸는거로 위로 옮김
                         //var newPost = post //newPost는 값은 같지만 다른 위치에 존재하는 변수가 됨
                         //newPost.isLiked = true
                         //newPost.likeCount! += 1
