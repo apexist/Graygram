@@ -60,7 +60,7 @@ final class PostEditViewTextCell: UITableViewCell {
 }
 
 extension PostEditViewTextCell: UITextViewDelegate {
-    //텍스트가 변경되었을때 알려주는 메소드
+    //텍스트가 변경되었을때 알려주는 메소드 //콜백 클로저를 호출
     func textViewDidChange(_ textView: UITextView) {
         self.textDidChange?(textView.text)
     }

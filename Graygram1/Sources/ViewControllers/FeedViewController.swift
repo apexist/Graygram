@@ -12,6 +12,12 @@ import Alamofire
 //클래스 이름을 바꾸면, 파일이름도 왼쪽에서 바꾸어 줘야 함
 final class FeedViewController: UIViewController {
     
+    //새로운 스타일로 타입정의, enum으로 속성을 정의
+    enum ViewMode {
+        case card
+        case tile
+    }
+    
     fileprivate var posts: [Post] = []
     
     //더보기 할 페이지가 있는지. 확인
@@ -19,6 +25,26 @@ final class FeedViewController: UIViewController {
     
     //로딩중인지 확인 필요 //로딩이 시작될때 true로 만들어줌
     fileprivate var isLoading: Bool = false
+    
+    //뷰모드 정의, 초기값은 card, 바뀌었을때 코드를 아래에 작성
+    fileprivate var viewMode: ViewMode = .card {
+        didSet {
+            //set되었을때 이걸 수행
+            switch self.viewMode {
+            case .card:
+                self.navigationItem.leftBarButtonItem = self.tileButtonItem
+            case .tile:
+                self.navigationItem.leftBarButtonItem = self.cardButtonItem
+            }
+            self.collectionView.reloadData()
+        }
+    }
+    
+    //왼쪽에 타일/카드 버튼추가
+    fileprivate let tileButtonItem = UIBarButtonItem(image: UIImage(named : "icon-tile"), style: .plain, target: nil, action: nil)
+    //혹은 var로 하려면
+    //fileprivate lazy var tileButtonItem = UIBarButtonItem(image: UIImage(named : "icon-tile"), style: .plain, target: .self, action: #select())
+    fileprivate let cardButtonItem = UIBarButtonItem(image: UIImage(named : "icon-card"), style: .plain, target: nil, action: nil)
     
     fileprivate let refreshControl = UIRefreshControl()
     
@@ -36,6 +62,15 @@ final class FeedViewController: UIViewController {
         self.tabBarItem.title = "Feed" // (기본값 self.title)
         self.tabBarItem.image = UIImage(named: "tab-feed")
         self.tabBarItem.selectedImage = UIImage(named: "tab-feed-selected")
+        
+        //위에서 프로퍼티 만들때 target과 action은 아직 정의하지 못하므로 지금 함
+        self.tileButtonItem.target = self
+        self.tileButtonItem.action = #selector(tileButtonItemDidTap)
+        self.cardButtonItem.target = self
+        self.cardButtonItem.action = #selector(cardButtonItemDidTap)
+        
+        self.navigationItem.leftBarButtonItem = self.tileButtonItem
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,6 +88,8 @@ final class FeedViewController: UIViewController {
         collectionView.backgroundColor = .white
         //우리가 정의한 PostCardCell로 등록
         collectionView.register(PostCardCell.self, forCellWithReuseIdentifier: "cardCell")
+        
+        collectionView.register(PostTileCell.self, forCellWithReuseIdentifier: "tileCell")
         
         collectionView.register(CollectionActivityIndicatorView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "activitiIndicatorView")
         
@@ -90,6 +127,9 @@ final class FeedViewController: UIViewController {
         
         //좋아요 취소 노티피케이선 관찰
         NotificationCenter.default.addObserver(self, selector: #selector(postDidUnLike), name: .postDidUnLike, object: nil)
+        
+        //post 생성된 노티피케이선 관찰
+        NotificationCenter.default.addObserver(self, selector: #selector(postDidCreate), name: .postDidCreate, object: nil)
         
         fetchPosts()
         
@@ -204,6 +244,26 @@ final class FeedViewController: UIViewController {
         newPost.likeCount! -= 1
         self.posts[index] = newPost
     }
+    
+    
+    func postDidCreate(notification: Notification) {
+        guard let post = notification.userInfo?["post"] as? Post else { return }
+        //vc가 가진 post의 0번 인덱스에 넣어줘야 먼저 나옴
+        self.posts.insert(post, at: 0)
+        self.collectionView.reloadData() //데이터가 바뀌었으므로 리로드
+        
+        //사용자에게 업로드가 진행되는지 알려줘야 한다 
+        
+    }
+    
+    func tileButtonItemDidTap() {
+        //set되었을때 위에서 뷰를 바꿔주는 코드 정의해서 씀.. 스위프트 짱
+        self.viewMode = .tile
+    }
+    
+    func cardButtonItemDidTap() {
+        self.viewMode = .card
+    }
 
 }
 
@@ -218,14 +278,41 @@ extension FeedViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "cardCell",
-            for: indexPath
-        ) as! PostCardCell
         
-        let post = self.posts[indexPath.item]
-        cell.configure(post: post)
-        return cell
+        //카드셀과 타일셀 분기
+        switch self.viewMode {
+        case .card :
+            
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "cardCell",
+                for: indexPath
+                ) as! PostCardCell
+            
+            let post = self.posts[indexPath.item]
+            cell.configure(post: post)
+            return cell
+            
+        case .tile :
+            
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "tileCell",
+                for: indexPath
+                ) as! PostTileCell
+            
+            let post = self.posts[indexPath.item]
+            cell.configure(post: post)
+            
+            //콜백클로저 정의
+            cell.didTap = {
+                let viewController = PostViewController(postID: post.id)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+            
+            return cell
+            
+        }
+        
+        
     }
     
     //아래 이상함 체크하자
@@ -247,14 +334,22 @@ extension FeedViewController: UICollectionViewDataSource {
 extension FeedViewController : UICollectionViewDelegateFlowLayout {
     
     // 사이즈 정의 , 특정한 indexpath에 해당하는 셀의 사이즈를 정의, 모두 post card cell에 위읨
-    
+    // 셀의 사이즈.....
     func collectionView(
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let post = self.posts[indexPath.item]
-        return PostCardCell.size(width: collectionView.frame.size.width, post: post)
+        //카드셀과 타일셀 분기
+        switch self.viewMode {
+        case .card:
+            let post = self.posts[indexPath.item]
+            return PostCardCell.size(width: collectionView.frame.size.width, post: post)
+        case .tile:
+            return PostTileCell.size(width: collectionView.width / 3)
+        }
+        
+
     //return CGSize(
     //width: collectionView.frame.size.width,
     //height: collectionView.frame.size.width
@@ -285,17 +380,29 @@ extension FeedViewController : UICollectionViewDelegateFlowLayout {
         }
     }
     
-    //아래 체크
+    //아래 체크 inset 값
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt: Int)
         -> UIEdgeInsets {
-            return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+            
+            switch self.viewMode {
+            case .card: return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+            case .tile: return UIEdgeInsets.zero
+            }
+
     }
 
-    //아래 체크
+    //아래 체크 //셀간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int)
         -> CGFloat {
-            return 20
+            
+            switch self.viewMode {
+            case .card: return 20
+            case .tile: return 0
+            }
     }
     
-    
+    //섹션간격
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }

@@ -51,4 +51,7 @@ extension Notification.Name {
         return .init("postDidUnLike")
     }
     
+    /// 새로운 'Post'가 생성될 경우 발생합니다. 'userInfo'에 'post: Post'가 전달됩니다.
+    static let postDidCreate : Notification.Name = .init("postDidCreate")
+    
 }
