@@ -64,7 +64,7 @@ final class PostCardCell: UICollectionViewCell {
     //1. 생성자
     override init(frame: CGRect) {
         super.init(frame:frame)
-        // 1. 속성 초기화
+        // 1) 속성 초기화
         
         avatarView.backgroundColor = .gray
         avatarView.contentMode = .scaleAspectFill //이미지를 네모난 칸에 어떻게 넣을 것인가? 하는 속성
@@ -175,7 +175,7 @@ final class PostCardCell: UICollectionViewCell {
     }
     */
     
-    
+    //가로세로 사이즈를 모두 정해야 하므로 CGSize로 반환한다. post가 있어야. 크기를 알수 있다. 몇개 있는지 알아야지...
     class func size(width: CGFloat, post: Post) -> CGSize {
         var height: CGFloat = 0
         

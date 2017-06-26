@@ -145,7 +145,7 @@ final class CropViewController: UIViewController {
             self.imageView.size = self.cropAreaView.size
         }
         
-        //이미지가 크롭영역의 가운데 위치 하게 하기 위해
+        //이미지가 크롭영역의 가운데 위치 하게 하기 위해 / 스크롤 하더라도 원점으로 오도록
         self.scrollView.contentInset.top = (self.scrollView.height - self.cropAreaView.height) / 2
         self.scrollView.contentInset.bottom = self.scrollView.contentInset.top
         //사이즈를 정해줘야 스크롤이 된다. 테이블뷰와 컨렉션뷰는 안잡아줘도 자동으로 된다.
@@ -170,6 +170,7 @@ final class CropViewController: UIViewController {
         var rect = self.scrollView.convert(self.cropAreaView.frame, from: self.cropAreaView.superview)
         //rect는 imageView.frame과 같이 있게 된다.
         
+        //크롭할 영역을 원본이미지에 맞게 비율을 맞춤
         rect.origin.x *= image.size.width / self.imageView.width
         rect.origin.y *= image.size.height / self.imageView.height
         rect.size.width *= image.size.width / self.imageView.width
@@ -178,7 +179,7 @@ final class CropViewController: UIViewController {
         //CG = Core Graphics
         if let croppedCGImage = image.cgImage?.cropping(to: rect) {
             let croppedImage = UIImage(cgImage: croppedCGImage)
-            self.didFinishCropping?(croppedImage) //클로저 호출
+            self.didFinishCropping?(croppedImage) //콜백 클로저 호출
         }
     }
     

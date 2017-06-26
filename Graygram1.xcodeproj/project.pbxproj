@@ -10,6 +10,9 @@
 		6B520F9CCDAAF6D5DD6C9D67 /* Pods_Graygram1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C4579B18C29CFAEAFA15DBD /* Pods_Graygram1.framework */; };
 		762938961EFA8D1C000D1F60 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762938951EFA8D1C000D1F60 /* CropViewController.swift */; };
 		762938981EFAAFA0000D1F60 /* UIImage+Grayscale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762938971EFAAFA0000D1F60 /* UIImage+Grayscale.swift */; };
+		763057EF1EFD2E2900FEE044 /* PostEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763057EE1EFD2E2800FEE044 /* PostEditViewController.swift */; };
+		763057F11EFD30A100FEE044 /* PostEditViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763057F01EFD30A100FEE044 /* PostEditViewImageCell.swift */; };
+		763057F31EFD41A600FEE044 /* PostEditViewTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763057F21EFD41A600FEE044 /* PostEditViewTextCell.swift */; };
 		76388EC21EE8250F009647DB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388EC11EE8250F009647DB /* User.swift */; };
 		76388EC51EE8392D009647DB /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388EC41EE8392D009647DB /* String+Size.swift */; };
 		76388EC71EEEAFDF009647DB /* UIImageView+Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388EC61EEEAFDF009647DB /* UIImageView+Photo.swift */; };
@@ -31,6 +34,9 @@
 		3C4B4A50815EF60AA83ED3F0 /* Pods-Graygram1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graygram1.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graygram1/Pods-Graygram1.debug.xcconfig"; sourceTree = "<group>"; };
 		762938951EFA8D1C000D1F60 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 		762938971EFAAFA0000D1F60 /* UIImage+Grayscale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Grayscale.swift"; sourceTree = "<group>"; };
+		763057EE1EFD2E2800FEE044 /* PostEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostEditViewController.swift; sourceTree = "<group>"; };
+		763057F01EFD30A100FEE044 /* PostEditViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostEditViewImageCell.swift; sourceTree = "<group>"; };
+		763057F21EFD41A600FEE044 /* PostEditViewTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostEditViewTextCell.swift; sourceTree = "<group>"; };
 		7633A3601EDEDBE000F11E2A /* Graygram1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graygram1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76388EC11EE8250F009647DB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76388EC41EE8392D009647DB /* String+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
@@ -152,6 +158,8 @@
 			children = (
 				76AAD2411EDF01790022829F /* PostCardCell.swift */,
 				76388EC81EEEC4F5009647DB /* CollectionActivityIndicatorView.swift */,
+				763057F01EFD30A100FEE044 /* PostEditViewImageCell.swift */,
+				763057F21EFD41A600FEE044 /* PostEditViewTextCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -173,6 +181,7 @@
 				76388ECE1EF1707C009647DB /* SplashViewController.swift */,
 				76388ED01EF7FF70009647DB /* MainTabBarController.swift */,
 				762938951EFA8D1C000D1F60 /* CropViewController.swift */,
+				763057EE1EFD2E2800FEE044 /* PostEditViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -299,7 +308,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				763057F11EFD30A100FEE044 /* PostEditViewImageCell.swift in Sources */,
 				76388ECB1EF1519B009647DB /* LoginViewController.swift in Sources */,
+				763057F31EFD41A600FEE044 /* PostEditViewTextCell.swift in Sources */,
 				76AAD2401EDEEEFD0022829F /* Post.swift in Sources */,
 				76388ED11EF7FF70009647DB /* MainTabBarController.swift in Sources */,
 				762938961EFA8D1C000D1F60 /* CropViewController.swift in Sources */,
@@ -310,6 +321,7 @@
 				76388EC71EEEAFDF009647DB /* UIImageView+Photo.swift in Sources */,
 				76F29B3F1EDEE5F20077F571 /* FeedViewController.swift in Sources */,
 				76388EC21EE8250F009647DB /* User.swift in Sources */,
+				763057EF1EFD2E2900FEE044 /* PostEditViewController.swift in Sources */,
 				76F29B381EDEE4800077F571 /* AppDelegate.swift in Sources */,
 				76388ECD1EF165D6009647DB /* DataResponse+ErrorInfo.swift in Sources */,
 				76388ECF1EF1707C009647DB /* SplashViewController.swift in Sources */,

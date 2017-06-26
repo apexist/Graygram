@@ -54,11 +54,21 @@ final class MainTabBarController: UITabBarController {
         
         cropViewController.didFinishCropping = { image in
             print(image)
-            let grayscaledImage = image.grayscaled()
+            guard let grayscaledImage = image.grayscaled() else { return }
+            //dismiss 해야 한다. !!!!
+            self.dismiss(animated: true, completion: nil)
+            self.presentPostEditViewController(image: grayscaledImage)
             print(grayscaledImage)
         }
         
         let navigationController = UINavigationController(rootViewController: cropViewController)
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    //PostEditViewController를 올림
+    fileprivate func presentPostEditViewController(image: UIImage) {
+        let viewController = PostEditViewController(image: image)
+        let navigationController = UINavigationController(rootViewController: viewController)
         self.present(navigationController, animated: true, completion: nil)
     }
     

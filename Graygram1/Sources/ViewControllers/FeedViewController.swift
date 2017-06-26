@@ -42,6 +42,11 @@ final class FeedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //뷰가 내려갈때 노티피케이션을 없앤다
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
