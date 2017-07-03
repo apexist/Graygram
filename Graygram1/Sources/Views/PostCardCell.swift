@@ -273,6 +273,9 @@ final class PostCardCell: UICollectionViewCell {
             //있던 데이터는 바뀌지 않음, 따라서 feedviewcontroller가 알수 있도록 notification해줌
             //global하게 메시지 전달
             //Notification의 싱글톤 인스턴스를 생성하고 보냄 , Post.swift에 .postDidLike정의
+            
+            PostServcie.like(postID: post.id)
+            /*
             NotificationCenter.default.post(name: .postDidLike, object: self, userInfo: ["postID": post.id!])
             
             Alamofire.request(urlString, method: .post)
@@ -297,13 +300,17 @@ final class PostCardCell: UICollectionViewCell {
                             NotificationCenter.default.post(name: .postDidUnLike, object: self, userInfo: ["postID": post.id!])
                         }
                     }
-                }
+                }*/
         } else {
             //취소를 먼저 UI 처리 하고 요청
             var newPost = post //newPost는 값은 같지만 다른 위치에 존재하는 변수가 됨
             newPost.isLiked = false
             newPost.likeCount! -= 1
             self.configure(post: newPost) //복제본을 가지고 configure다시 실행
+            
+            PostServcie.Unlike(postID: post.id)
+            
+            /*
             //notification발송
             NotificationCenter.default.post(name: .postDidUnLike, object: self, userInfo: ["postID": post.id!])
             
@@ -323,7 +330,7 @@ final class PostCardCell: UICollectionViewCell {
                             NotificationCenter.default.post(name: .postDidLike, object: self, userInfo: ["postID": post.id!])
                          }
                     }
-                }
+                }*/
         }
     }
 }

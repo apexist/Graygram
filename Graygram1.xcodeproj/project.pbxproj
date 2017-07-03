@@ -21,6 +21,15 @@
 		76388ECD1EF165D6009647DB /* DataResponse+ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388ECC1EF165D5009647DB /* DataResponse+ErrorInfo.swift */; };
 		76388ECF1EF1707C009647DB /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388ECE1EF1707C009647DB /* SplashViewController.swift */; };
 		76388ED11EF7FF70009647DB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76388ED01EF7FF70009647DB /* MainTabBarController.swift */; };
+		766D52F51F03C6AC00B64EC9 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D52F41F03C6AC00B64EC9 /* UserService.swift */; };
+		766D52F71F03CBC300B64EC9 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D52F61F03CBC300B64EC9 /* MappingError.swift */; };
+		766D52F91F03CD8800B64EC9 /* DataResponse+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D52F81F03CD8800B64EC9 /* DataResponse+Map.swift */; };
+		766D52FB1F03D88A00B64EC9 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D52FA1F03D88A00B64EC9 /* AuthService.swift */; };
+		766D52FD1F03DC5500B64EC9 /* APIServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D52FC1F03DC5500B64EC9 /* APIServiceType.swift */; };
+		766D52FF1F03DE0700B64EC9 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D52FE1F03DE0700B64EC9 /* FeedService.swift */; };
+		766D53011F03E28000B64EC9 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D53001F03E28000B64EC9 /* Feed.swift */; };
+		766D53031F03E4AA00B64EC9 /* Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D53021F03E4AA00B64EC9 /* Paging.swift */; };
+		766D53051F03E87D00B64EC9 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D53041F03E87D00B64EC9 /* PostService.swift */; };
 		76AAD2401EDEEEFD0022829F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AAD23F1EDEEEFD0022829F /* Post.swift */; };
 		76AAD2421EDF01790022829F /* PostCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AAD2411EDF01790022829F /* PostCardCell.swift */; };
 		76F29B361EDEE4800077F571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76F29B2E1EDEE4800077F571 /* Assets.xcassets */; };
@@ -48,6 +57,15 @@
 		76388ECC1EF165D5009647DB /* DataResponse+ErrorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataResponse+ErrorInfo.swift"; sourceTree = "<group>"; };
 		76388ECE1EF1707C009647DB /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		76388ED01EF7FF70009647DB /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		766D52F41F03C6AC00B64EC9 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		766D52F61F03CBC300B64EC9 /* MappingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingError.swift; sourceTree = "<group>"; };
+		766D52F81F03CD8800B64EC9 /* DataResponse+Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataResponse+Map.swift"; sourceTree = "<group>"; };
+		766D52FA1F03D88A00B64EC9 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		766D52FC1F03DC5500B64EC9 /* APIServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIServiceType.swift; sourceTree = "<group>"; };
+		766D52FE1F03DE0700B64EC9 /* FeedService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
+		766D53001F03E28000B64EC9 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		766D53021F03E4AA00B64EC9 /* Paging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paging.swift; sourceTree = "<group>"; };
+		766D53041F03E87D00B64EC9 /* PostService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		76AAD23F1EDEEEFD0022829F /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		76AAD2411EDF01790022829F /* PostCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCardCell.swift; sourceTree = "<group>"; };
 		76F29B2E1EDEE4800077F571 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -114,8 +132,23 @@
 				76388EC61EEEAFDF009647DB /* UIImageView+Photo.swift */,
 				76388ECC1EF165D5009647DB /* DataResponse+ErrorInfo.swift */,
 				762938971EFAAFA0000D1F60 /* UIImage+Grayscale.swift */,
+				766D52F61F03CBC300B64EC9 /* MappingError.swift */,
+				766D52F81F03CD8800B64EC9 /* DataResponse+Map.swift */,
+				766D53021F03E4AA00B64EC9 /* Paging.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		766D52F31F03C67E00B64EC9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				766D52F41F03C6AC00B64EC9 /* UserService.swift */,
+				766D52FA1F03D88A00B64EC9 /* AuthService.swift */,
+				766D52FC1F03DC5500B64EC9 /* APIServiceType.swift */,
+				766D52FE1F03DE0700B64EC9 /* FeedService.swift */,
+				766D53041F03E87D00B64EC9 /* PostService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		76F29B2C1EDEE4800077F571 /* Graygram1 */ = {
@@ -140,8 +173,9 @@
 		76F29B311EDEE4800077F571 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				76388EC31EE838D7009647DB /* Utils */,
 				76F29B321EDEE4800077F571 /* AppDelegate.swift */,
+				766D52F31F03C67E00B64EC9 /* Services */,
+				76388EC31EE838D7009647DB /* Utils */,
 				76F29B3C1EDEE5F20077F571 /* Models */,
 				76F29B3B1EDEE5F20077F571 /* Views */,
 				76F29B3D1EDEE5F20077F571 /* ViewControllers */,
@@ -161,10 +195,10 @@
 			isa = PBXGroup;
 			children = (
 				76AAD2411EDF01790022829F /* PostCardCell.swift */,
+				76FC53811F013FAD004120C0 /* PostTileCell.swift */,
 				76388EC81EEEC4F5009647DB /* CollectionActivityIndicatorView.swift */,
 				763057F01EFD30A100FEE044 /* PostEditViewImageCell.swift */,
 				763057F21EFD41A600FEE044 /* PostEditViewTextCell.swift */,
-				76FC53811F013FAD004120C0 /* PostTileCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +208,7 @@
 			children = (
 				76AAD23F1EDEEEFD0022829F /* Post.swift */,
 				76388EC11EE8250F009647DB /* User.swift */,
+				766D53001F03E28000B64EC9 /* Feed.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -315,10 +350,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				763057F11EFD30A100FEE044 /* PostEditViewImageCell.swift in Sources */,
+				766D53011F03E28000B64EC9 /* Feed.swift in Sources */,
+				766D52FB1F03D88A00B64EC9 /* AuthService.swift in Sources */,
 				76388ECB1EF1519B009647DB /* LoginViewController.swift in Sources */,
+				766D52F91F03CD8800B64EC9 /* DataResponse+Map.swift in Sources */,
 				763057F31EFD41A600FEE044 /* PostEditViewTextCell.swift in Sources */,
 				76AAD2401EDEEEFD0022829F /* Post.swift in Sources */,
+				766D52F71F03CBC300B64EC9 /* MappingError.swift in Sources */,
 				76388ED11EF7FF70009647DB /* MainTabBarController.swift in Sources */,
+				766D53031F03E4AA00B64EC9 /* Paging.swift in Sources */,
 				762938961EFA8D1C000D1F60 /* CropViewController.swift in Sources */,
 				76388EC91EEEC4F5009647DB /* CollectionActivityIndicatorView.swift in Sources */,
 				76388EC51EE8392D009647DB /* String+Size.swift in Sources */,
@@ -330,6 +370,10 @@
 				76388EC21EE8250F009647DB /* User.swift in Sources */,
 				763057EF1EFD2E2900FEE044 /* PostEditViewController.swift in Sources */,
 				76FC53841F014686004120C0 /* PostVIewController.swift in Sources */,
+				766D52FF1F03DE0700B64EC9 /* FeedService.swift in Sources */,
+				766D52F51F03C6AC00B64EC9 /* UserService.swift in Sources */,
+				766D53051F03E87D00B64EC9 /* PostService.swift in Sources */,
+				766D52FD1F03DC5500B64EC9 /* APIServiceType.swift in Sources */,
 				76F29B381EDEE4800077F571 /* AppDelegate.swift in Sources */,
 				76388ECD1EF165D6009647DB /* DataResponse+ErrorInfo.swift in Sources */,
 				76388ECF1EF1707C009647DB /* SplashViewController.swift in Sources */,

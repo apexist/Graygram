@@ -13,7 +13,7 @@ final class MainTabBarController: UITabBarController {
     let feedViewController = FeedViewController()
     let settingsViewController = UIViewController()
     //업로드 버튼역할을 할 가짜 뷰 컨트롤러, 실제로 선택되지는 않음
-    fileprivate let fakeUploadViewController = UIViewController()
+    fileprivate let fakeUploadViewController = UIViewController() 
     
     init() {
         super.init(nibName: nil, bundle: nil)

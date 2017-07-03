@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 final class SplashViewController: UIViewController {
     
@@ -21,27 +20,24 @@ final class SplashViewController: UIViewController {
         activityIndicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        activityIndicatorView.stopAnimating()
+        activityIndicatorView.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    
-        let urlString = "https://api.graygram.com/me"
         
-        //세션이 정상적이라면, 서버에서 정보가 내려오고 세션이 만료되면 에러가 내려옴
-        Alamofire.request(urlString)
-          .validate(statusCode: 200..<400)
-          .responseJSON{ response in
+        //UserService로 분리해서 Alamofire 제거.. 공통으로 보냄
+        UserService.me { response in //completion으로 response가 넘어옴 //콜백클로저
             switch response.result {
             case .success(let value):
-                print("내 프로필정보 가져오기 성공 \(value)")
+                print("내프로필정보 받아오기 성공\(value)")
                 AppDelegate.instance?.presentMainScreen()
+                
             case .failure(let error):
-                print("내 프로필정보 가져오기 실패 \(error)")
+                print("내프로필정보 받아오기 실패\(error)")
                 AppDelegate.instance?.presentLoginScreen()
             }
-                
-          }
+        }
+        
     }
 }

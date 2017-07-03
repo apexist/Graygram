@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire // 이건 쓸려면 import 따로 해줘야 한다.
+//import Alamofire // 이건 쓸려면 import 따로 해줘야 한다.
 
 
 //로그인을 처리할 viewcontroller
@@ -90,6 +90,7 @@ final class LoginViewController: UIViewController {
     }
     
     func login(username: String, password: String) {
+        /*
         let urlString = "https://api.graygram.com/login/username"
         let parameters: Parameters = [
             "username": username,
@@ -98,35 +99,33 @@ final class LoginViewController: UIViewController {
         //let headers: [String: String] = [
         let headers: HTTPHeaders = [
             "Accept": "application/json",
-        ]
+        ]*/
         
-        Alamofire
-            .request(urlString, method: .post, parameters: parameters, headers: headers)
-            .validate(statusCode: 200..<400) //http 응답코드의 성공으로 볼 코드 범위 200~399 인경우 성공
-            .responseJSON { response in
-                switch response.result {
-                case .success(let value):
-                    print("로그인성공!\(value)")
-                    //로그인 성공하면 LoginViewController -> FeedViewController로 바꿈
-                    AppDelegate.instance?.presentMainScreen()
-                    
-                case .failure(let error):
-                    print("로그인실패!\(error)")
-                    //옵셔널 바인딩, errorInfo 에서 반환값이 옵셔널이다.
-                    if let errorInfo = response.errorInfo() {
-                        switch errorInfo.field {
-                        case "username":
-                            self.usernameTextField.becomeFirstResponder()
-                            self.usernameTextField.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-                        case "password":
-                            self.passwordTextField.becomeFirstResponder()
-                            self.passwordTextField.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-                        default:
-                            break //위의 두개 String이 아니면 브레이크 한다.
-                        }
+        AuthService.login(username: username, password: password) { response in
+            switch response.result {
+            case .success(let value):
+                print("로그인성공!\(value)")
+                //로그인 성공하면 LoginViewController -> FeedViewController로 바꿈
+                AppDelegate.instance?.presentMainScreen()
+                
+            case .failure(let error):
+                print("로그인실패!\(error)")
+                //옵셔널 바인딩, errorInfo 에서 반환값이 옵셔널이다.
+                if let errorInfo = response.errorInfo() {
+                    switch errorInfo.field {
+                    case "username":
+                        self.usernameTextField.becomeFirstResponder()
+                        self.usernameTextField.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+                    case "password":
+                        self.passwordTextField.becomeFirstResponder()
+                        self.passwordTextField.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+                    default:
+                        break //위의 두개 String이 아니면 브레이크 한다.
                     }
                 }
             }
+        }
+        
     }
     
     //이벤트를 처리한 놈이 파라미터로 옴

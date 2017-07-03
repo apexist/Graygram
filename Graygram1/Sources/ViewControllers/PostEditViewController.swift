@@ -189,6 +189,7 @@ final class PostEditViewController: UIViewController {
                                 //noti 발송위해서 옵셔널 바인딩
                                 if let json = value as? [String:Any], let post = Post(JSON: json) {
                                     //default 라는 싱클톤
+                                    //업로드 완료를 글로벌하게 뿌림
                                     NotificationCenter.default.post(
                                         name: .postDidCreate,
                                         object: self,

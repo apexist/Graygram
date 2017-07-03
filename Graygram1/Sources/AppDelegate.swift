@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewController = SplashViewController() //임시코드
         let navigationController = UINavigationController(rootViewController: viewController)
         window.rootViewController = navigationController
-        
         //URLSession
         //Alamofire : Matt Thomson 이 만듬  
         //1. 소스코드 직접 다운로드 : 하지말라

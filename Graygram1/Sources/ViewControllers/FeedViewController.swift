@@ -131,13 +131,13 @@ final class FeedViewController: UIViewController {
         //post 생성된 노티피케이선 관찰
         NotificationCenter.default.addObserver(self, selector: #selector(postDidCreate), name: .postDidCreate, object: nil)
         
-        fetchPosts()
+        fetchPosts(paging: .refresh)
         
     }
     
 
     func refreshControlDidChangeValue() {
-        fetchPosts()
+        fetchPosts(paging: .refresh)
     }
     
     //public : 다른 모듈에서 접근 가능
@@ -149,24 +149,51 @@ final class FeedViewController: UIViewController {
     //Static Dispatch : final class 를 찾아서 정의함...
     //Dynamic Dispatch : OjbC는 모두, 런타임에 실행함
     
-    fileprivate func fetchPosts(isMore: Bool = false) {
+    fileprivate func fetchPosts(paging: Paging) {
         
         //로딩중이면 안하겠다.
         guard !isLoading else { return }
         
-        let urlString: String //아래에서 모든 케이스가 커버되었으니까 초기값이 없더라도 컴파일됨
+        //let urlString: String //아래에서 모든 케이스가 커버되었으니까 초기값이 없더라도 컴파일됨
         
+        /*
         if !isMore {
             urlString = "https://api.graygram.com/feed?limit=3"
         } else if let nextURLString = self.nextURLString {
             urlString = nextURLString
         } else {
             return
-        }
+        }*/
         
         //중복요청 막기 위해서
         isLoading = true
         
+        FeedService.feed(paging: paging) { response in
+            self.isLoading = false
+            self.refreshControl.endRefreshing()
+            
+            switch response.result {
+            case .success(let feed):
+                let newPosts = feed.posts ?? []
+                
+                switch paging {
+                case .refresh:
+                    self.posts = newPosts
+                case .next:
+                    self.posts += newPosts
+                }
+                
+                self.nextURLString = feed.nextURLString
+                self.collectionView.reloadData()
+                
+            case .failure(let error):
+                print(error)
+    
+            }
+            
+        }
+            
+        /*
         Alamofire.request(urlString)
             .responseJSON { response in
                 //로딩중 아님
@@ -197,6 +224,7 @@ final class FeedViewController: UIViewController {
                         print(error)
                 }
         }
+        */
     }
 
     override func viewDidLayoutSubviews() {
@@ -358,8 +386,8 @@ extension FeedViewController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         
-        
         //마지막 페이지에서는 더보기 요청이 불가능한 경우 (마지막페이지에 도달)
+        
         if self.nextURLString == nil && !self.posts.isEmpty {
             return .zero
         } else {
@@ -374,9 +402,10 @@ extension FeedViewController : UICollectionViewDelegateFlowLayout {
         
         guard scrollView.contentSize.height > 0 else { return }
         let contentOffsetBottom = scrollView.contentOffset.y + scrollView.height
-        if contentOffsetBottom >= scrollView.contentSize.height - 300 /*적당히 내려갔을때 처리*/ {
+        let isReachedBottom = contentOffsetBottom >= scrollView.contentSize.height - 300 /*적당히 내려갔을때 처리*/ //next가 있는경우
+        if let nextURLString = self.nextURLString, isReachedBottom {
             print("Load more")
-            fetchPosts(isMore: true)
+            fetchPosts(paging: .next(nextURLString))
         }
     }
     
