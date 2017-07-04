@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 //미션
 //1. PostEditViewController 정의
@@ -138,6 +137,26 @@ final class PostEditViewController: UIViewController {
         //프로그래스바가 보이게
         self.progressView.isHidden = false
         
+        PostServcie.create(
+            image: self.image,
+            message: self.text,
+            progress: {progress in
+                //여기 못따라감
+                self.progressView.progress = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
+            },
+            completion: { response in
+                switch response.result {
+                case .success:
+                    self.dismiss(animated: true, completion: nil)
+                case .failure:
+                    self.setControlsEnabled(true)
+                    self.progressView.isHidden = true
+                    
+                }
+            }
+        )
+        
+        
         /*
           1. x-www-form-urlencoded
             POST https://example.com
@@ -155,68 +174,7 @@ final class PostEditViewController: UIViewController {
                 "key1" : "abc"
             }
         */
-        
-        let urlString = "https://api.graygram.com/posts"
-        
-        Alamofire.upload(
-            multipartFormData: { formData in
-                if let imageData = UIImageJPEGRepresentation(self.image, 1) {
-                    //formData에 직렬화된 이미지를 추가
-                    formData.append(imageData, withName: "photo", fileName: "photo.jpg", mimeType: "image/jpeg")
-                }
-                if let textData = self.text?.data(using: .utf8) {
-                    formData.append(textData, withName: "message")
-                }
-            },
-            to: urlString,
-            method: .post,
-            encodingCompletion: { encodingResult in //request만들때 실패할수 있음, 인코딩이 성공했는지 실패했는지, 나누어 처리
-                switch encodingResult {
-                case .success(let request, _, _):
-                    print("인코딩 성공 : \(request)")
-                    request
-                        //프로그래스 진행상태를 위한것
-                        .uploadProgress { progress in
-                            self.progressView.progress = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
-                        }
-                        .validate(statusCode: 200..<400)
-                        .responseJSON { response in
-                            switch response.result {
-                            case .success(let value):
-                                print("업로드 성공 : \(value)")
-                                //화면을 닫고, Noti발송
-                                
-                                //noti 발송위해서 옵셔널 바인딩
-                                if let json = value as? [String:Any], let post = Post(JSON: json) {
-                                    //default 라는 싱클톤
-                                    //업로드 완료를 글로벌하게 뿌림
-                                    NotificationCenter.default.post(
-                                        name: .postDidCreate,
-                                        object: self,
-                                        userInfo: ["post": post]
-                                    )
-                                }
-                                //화면닫자
-                                self.dismiss(animated: true, completion: nil)
-                            case .failure(let error):
-                                print("업로드 실패 : \(error)")
-                                
-                                //다시 업로드 가능하게
-                                self.setControlsEnabled(true)
-                                
-                                //프로그래스바가 안보이게
-                                self.progressView.isHidden = true
-                            }
-                    }
-                case .failure(let error):
-                    print("인코딩 실패 : \(error)")
-                    //다시 업로드 가능하게
-                    self.setControlsEnabled(true)
-                    //프로그래스바가 안보이게
-                    self.progressView.isHidden = true
-                }
-            }
-        )
+    
     }
     
     func setControlsEnabled(_ isEnabled: Bool) {

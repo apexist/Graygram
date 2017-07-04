@@ -9,7 +9,7 @@
 import UIKit
 import ManualLayout
 import Kingfisher
-import Alamofire
+
 
 
 //더이상 상속하기 싫음
@@ -58,6 +58,7 @@ final class PostCardCell: UICollectionViewCell {
     fileprivate let messageLabel = UILabel()
     
     fileprivate var post: Post?
+    fileprivate var isMessageTrimmed : Bool?
     
     //cell을상속받으면 꼭 아래 함
     
@@ -116,13 +117,14 @@ final class PostCardCell: UICollectionViewCell {
     //2. 설정 , 데이터만 넣어줌 
     // UI 바꾸는건 configure에서만 수행하도록 한다.
     
-    func configure(post: Post) {
+    func configure(post: Post, isMessageTrimmed: Bool) {
         //self.backgroundColor = .lightGray //나중에 제거할 것임....영역확인 위함
         
         //post.user.photoID 는 옵셔널이다.이미지가 옵셔널일때 어떻게 하면 편할까
         //setImage에 photoID를 옵셔널로 정의 하고 guard let으로 처리
         
         self.post = post
+        self.isMessageTrimmed = isMessageTrimmed
         
         avatarView.setImage(photoID: post.user.photoID, size: .tiny)
         usernameLabel.text = post.user.username
@@ -133,6 +135,7 @@ final class PostCardCell: UICollectionViewCell {
         
         likeCountLabel.text = "\(post.likeCount ?? 0)명이 좋아합니다" //optional(0)명이 좋아합니다. 없애기 위해서 ?? 0 추가
         messageLabel.text = post.message
+        messageLabel.numberOfLines = isMessageTrimmed ? 3 : 0 // true 라면 3 false 라면 0 // 3원 연산자
         
         setNeedsLayout() //알아서 layoutsubview호출
         
@@ -176,7 +179,7 @@ final class PostCardCell: UICollectionViewCell {
     */
     
     //가로세로 사이즈를 모두 정해야 하므로 CGSize로 반환한다. post가 있어야. 크기를 알수 있다. 몇개 있는지 알아야지...
-    class func size(width: CGFloat, post: Post) -> CGSize {
+    class func size(width: CGFloat, post: Post, isMessageTrimmed: Bool) -> CGSize {
         var height: CGFloat = 0
         
         height += Metric.avatarViewTop
@@ -194,7 +197,7 @@ final class PostCardCell: UICollectionViewCell {
             height += message.size(
                 width: messageLabelWidth,
                 font: Font.messageLabel,
-                numberOfLines: 3
+                numberOfLines: isMessageTrimmed ? 3 : 0
                 ).height
         }
         
@@ -254,7 +257,8 @@ final class PostCardCell: UICollectionViewCell {
 
         //guard let postID = self.post?.id else { return }
         guard let post = self.post else { return }
-
+        guard let isMessageTrimmed = self.isMessageTrimmed else { return }
+        
         let urlString = "https://api.graygram.com/posts/\(post.id!)/likes"
         
         //UI를 그리는데 필요한 데이터를 바꾸고 자동갱신되도록
@@ -266,7 +270,7 @@ final class PostCardCell: UICollectionViewCell {
             var newPost = post //newPost는 값은 같지만 다른 위치에 존재하는 변수가 됨
             newPost.isLiked = true
             newPost.likeCount! += 1
-            self.configure(post: newPost)
+            self.configure(post: newPost, isMessageTrimmed: isMessageTrimmed)
             
             //notification발송 
             //스크롤내렸다 올라왔더니, 좋아요 이전의 데이터로 되어 있음 postcardcell이 가지고 있던  데이터는 없데이트 되었으나 feedviewcontroller가 가지고 
@@ -306,7 +310,7 @@ final class PostCardCell: UICollectionViewCell {
             var newPost = post //newPost는 값은 같지만 다른 위치에 존재하는 변수가 됨
             newPost.isLiked = false
             newPost.likeCount! -= 1
-            self.configure(post: newPost) //복제본을 가지고 configure다시 실행
+            self.configure(post: newPost, isMessageTrimmed: isMessageTrimmed) //복제본을 가지고 configure다시 실행
             
             PostServcie.Unlike(postID: post.id)
             

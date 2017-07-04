@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+//import Alamofire
 
 //클래스 이름을 바꾸면, 파일이름도 왼쪽에서 바꾸어 줘야 함
 final class FeedViewController: UIViewController {
@@ -317,7 +317,7 @@ extension FeedViewController: UICollectionViewDataSource {
                 ) as! PostCardCell
             
             let post = self.posts[indexPath.item]
-            cell.configure(post: post)
+            cell.configure(post: post, isMessageTrimmed: true)
             return cell
             
         case .tile :
@@ -372,7 +372,7 @@ extension FeedViewController : UICollectionViewDelegateFlowLayout {
         switch self.viewMode {
         case .card:
             let post = self.posts[indexPath.item]
-            return PostCardCell.size(width: collectionView.frame.size.width, post: post)
+            return PostCardCell.size(width: collectionView.frame.size.width, post: post, isMessageTrimmed: true)
         case .tile:
             return PostTileCell.size(width: collectionView.width / 3)
         }
